@@ -5,6 +5,8 @@ on: [push, pull_request]
 jobs:
   sonar:
     runs-on: ubuntu-latest
+    outputs:
+      quality_gate: ${{ steps.quality_gate.outputs.quality_gate }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -29,9 +31,11 @@ jobs:
       id: sonarqube-quality-gate-check
       uses: sonarsource/sonarqube-quality-gate-action@master
       env:
-       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-       SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} #OPTIONAL
-       SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} #OPTIONAL
+        SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+    - name: Debug Quality Gate
+      run: echo "Quality Gate Status: ${{ steps.quality_gate.outputs.quality_gate }}"
 
   build:
     runs-on: ubuntu-latest
