@@ -34,8 +34,9 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} #OPTIONAL
         SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+        
     - name: Debug Quality Gate
-      run: echo "Quality Gate Status: ${{ steps.quality_gate.outputs.quality_gate }}"
+      run: echo "Quality Gate Status:${{ steps.quality_gate.outputs.quality_gate }}"
 
   build:
     runs-on: ubuntu-latest
