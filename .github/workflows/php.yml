@@ -29,7 +29,7 @@ jobs:
       id: quality_gate
       run: |
         curl -u ${{ secrets.SONAR_TOKEN }}: \
-          "$SONAR_HOST/api/qualitygates/project_status?projectKey=my-Java-web-app" \
+          "$SONAR_HOST_URL/api/qualitygates/project_status?projectKey=my-Java-web-app" \
           -o sonar.json
         qualityGateStatus=$(jq -r '.projectStatus.status' sonar.json)
         echo "Quality Gate Status: $qualityGateStatus"
