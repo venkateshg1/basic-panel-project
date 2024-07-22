@@ -31,8 +31,13 @@ jobs:
         curl -u ${{ secrets.SONAR_TOKEN }}: \
           "${{ secrets.SONAR_HOST_URL }}/api/qualitygates/project_status?projectKey=my-Java-web-app" \
           -o sonar.json
-        cat sonar.json
-        qualityGateStatus=$(jq -r '.projectStatus.status' sonar.json)
+        echo "SonarQube API Response:"
+        cat sonar.json # Print the content of the JSON file for debugging
+        qualityGateStatus=$(jq -r '.projectStatus.status' sonar.json || echo 'error')
+        if [ "$qualityGateStatus" = "error" ]; then
+          echo "Failed to parse JSON. Exiting."
+          exit 1
+        fi
         echo "Quality Gate Status: $qualityGateStatus"
         if [ "$qualityGateStatus" != "OK" ]; then
           echo "Quality Gate failed"
