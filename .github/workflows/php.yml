@@ -52,7 +52,7 @@ jobs:
         echo "Quality Gate failed, sending notification..."
         # Replace the following lines with your notification logic, e.g., send email or Slack message
         # Example using mail (ensure mailx is installed and configured)
-        echo "Quality Gate failed for project my-project" | mailx -s "Quality Gate Failure" venkatesh.venky789@gmail.com
+        echo "Quality Gate failed for project my-project" | mailx -s "Quality Gate Failure" devops@limendo.com
 
   build:
     runs-on: ubuntu-latest
