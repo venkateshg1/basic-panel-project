@@ -60,7 +60,7 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     needs: sonar
-    if: ${{ needs.sonar.outputs.quality_gate != 'OK' }}
+    if: ${{ steps.quality_gate.outputs.quality_gate != 'OK' }}
     steps:
     - name: Notify developers
       run: |
