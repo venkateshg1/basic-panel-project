@@ -31,6 +31,7 @@ jobs:
         curl -u ${{ secrets.SONAR_TOKEN }}: \
           "${{ secrets.SONAR_HOST_URL }}/api/qualitygates/project_status?projectKey=my-Java-web-app" \
           -o sonar.json
+        cat sonar.json
         qualityGateStatus=$(jq -r '.projectStatus.status' sonar.json)
         echo "Quality Gate Status: $qualityGateStatus"
         if [ "$qualityGateStatus" != "OK" ]; then
