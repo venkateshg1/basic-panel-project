@@ -44,15 +44,17 @@ jobs:
     needs: sonarQubeAnalysis
     if: failure()
     steps:
-    - name: Install mailx
-      run: sudo apt-get install -y mailutils
-
-    - name: Send Notification
-      run: |
-        echo "Quality Gate failed, sending notification..."
-        # Replace the following lines with your notification logic, e.g., send email or Slack message
-        # Example using mail (ensure mailx is installed and configured)
-        echo "Quality Gate failed for project my-project" | mailx -s "Quality Gate Failure" venkateshg9430@gmail.com
+    - name: Send Notification Email
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 587
+        username: ${{ secrets.SMTP_LOGIN }}
+        password: ${{ secrets.SMTP_PASSWORD }}
+        subject: Quality Gate Failure
+        body: Quality Gate failed for project my-project
+        to: venkateshg9430@gmail.com
+        from: venkateshg9430@gmail.com
 
   build:
     runs-on: ubuntu-latest
